@@ -1,0 +1,105 @@
+local Players = game:GetService("Players")
+local UIS = game:GetService("UserInputService")
+
+local function loadNotepad(player)
+    local ScreenGui = Instance.new("ScreenGui")
+    ScreenGui.Parent = player:WaitForChild("PlayerGui")
+
+    local Frame = Instance.new("Frame")
+    Frame.Parent = ScreenGui
+    Frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    Frame.Size = UDim2.new(0, 350, 0, 250)
+    Frame.Position = UDim2.new(0.5, -175, 0.5, -125)
+    Frame.BackgroundTransparency = 0.1
+    Frame.Active = true
+    Frame.Draggable = true
+
+    -- Rounded edges
+    local UICorner = Instance.new("UICorner")
+    UICorner.Parent = Frame
+    UICorner.CornerRadius = UDim.new(0, 15)
+
+    -- TextBox for writing notes
+    local TextBox = Instance.new("TextBox")
+    TextBox.Parent = Frame
+    TextBox.Size = UDim2.new(1, -20, 0.6, 0)
+    TextBox.Position = UDim2.new(0, 10, 0, 10)
+    TextBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    TextBox.Text = "Type here..."
+    TextBox.ClearTextOnFocus = false
+    TextBox.TextWrapped = true
+    TextBox.MultiLine = true
+    TextBox.Font = Enum.Font.SourceSans
+    TextBox.TextSize = 20
+    TextBox.TextColor3 = Color3.fromRGB(0, 0, 0)
+
+    -- Rounded edges for TextBox
+    local TextBoxCorner = Instance.new("UICorner")
+    TextBoxCorner.Parent = TextBox
+    TextBoxCorner.CornerRadius = UDim.new(0, 10)
+
+    -- Font Dropdown
+    local FontDropdown = Instance.new("TextButton")
+    FontDropdown.Parent = Frame
+    FontDropdown.Size = UDim2.new(0.4, -15, 0.15, 0)
+    FontDropdown.Position = UDim2.new(0, 10, 0.65, 10)
+    FontDropdown.BackgroundColor3 = Color3.fromRGB(100, 100, 255)
+    FontDropdown.Text = "Change Font"
+    FontDropdown.Font = Enum.Font.SourceSansBold
+    FontDropdown.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+    -- Rounded edges for Font Dropdown
+    local FontCorner = Instance.new("UICorner")
+    FontCorner.Parent = FontDropdown
+    FontCorner.CornerRadius = UDim.new(0, 10)
+
+    -- Text Size Dropdown
+    local SizeDropdown = Instance.new("TextButton")
+    SizeDropdown.Parent = Frame
+    SizeDropdown.Size = UDim2.new(0.4, -15, 0.15, 0)
+    SizeDropdown.Position = UDim2.new(0.5, 10, 0.65, 10)
+    SizeDropdown.BackgroundColor3 = Color3.fromRGB(100, 255, 100)
+    SizeDropdown.Text = "Change Size"
+    SizeDropdown.Font = Enum.Font.SourceSansBold
+    SizeDropdown.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+    -- Rounded edges for Size Dropdown
+    local SizeCorner = Instance.new("UICorner")
+    SizeCorner.Parent = SizeDropdown
+    SizeCorner.CornerRadius = UDim.new(0, 10)
+
+    -- Clear Button
+    local ClearButton = Instance.new("TextButton")
+    ClearButton.Parent = Frame
+    ClearButton.Size = UDim2.new(1, -20, 0.15, 0)
+    ClearButton.Position = UDim2.new(0, 10, 0.8, 10)
+    ClearButton.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+    ClearButton.Text = "Clear"
+    ClearButton.Font = Enum.Font.SourceSansBold
+    ClearButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+    -- Rounded edges for ClearButton
+    local ButtonCorner = Instance.new("UICorner")
+    ButtonCorner.Parent = ClearButton
+    ButtonCorner.CornerRadius = UDim.new(0, 10)
+
+    -- Functionality
+    ClearButton.MouseButton1Click:Connect(function()
+        TextBox.Text = ""
+    end)
+
+    local fonts = {Enum.Font.SourceSans, Enum.Font.Code, Enum.Font.Highway, Enum.Font.Garamond, Enum.Font.Arcade}
+    FontDropdown.MouseButton1Click:Connect(function()
+        TextBox.Font = fonts[math.random(1, #fonts)]
+    end)
+
+    local sizes = {15, 20, 25, 30, 35}
+    SizeDropdown.MouseButton1Click:Connect(function()
+        TextBox.TextSize = sizes[math.random(1, #sizes)]
+    end)
+end
+
+local player = Players.LocalPlayer
+if player then
+    loadNotepad(player)
+end
